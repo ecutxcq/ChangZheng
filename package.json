@@ -17,6 +17,7 @@
     "leaflet-echarts3": "^0.1.0",
     "leaflet.bezier": "^0.1.1",
     "leaflet.chinesetmsproviders": "^1.0.22",
+    "leaflet.pm": "^2.2.0",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1"
   },

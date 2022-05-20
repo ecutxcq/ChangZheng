@@ -7,11 +7,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
-import utils from './utils'
+import lmap from'../src/assets/js/map'
 import system from '../src/views/system.vue'
 import home from '../src/views/home.vue'
 
-Vue.prototype.$utils = utils
+Vue.prototype.$map = lmap
 Vue.L = Vue.prototype.$L = L
 Vue.config.productionTip = false
 
