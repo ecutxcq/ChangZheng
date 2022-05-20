@@ -8,7 +8,7 @@
 				<el-timeline>
 					<el-timeline-item v-for="obj in events" :key="obj.id" placement="top">
 						<el-card>
-							<h4>{{obj.time}}</h4>
+							<h4 @click="addmarkers(obj.position)">{{obj.time}}</h4>
 							<p>{{obj.name}}</p>
 						</el-card>
 					</el-timeline-item>
@@ -23,6 +23,7 @@
 <script>
 	import eventBus from '../EventBus/event.js';
 	export default {
+		//控制时间轴的开关
 		props:['show'],
 		created(){
 			eventBus.$on('open',(show) => {
@@ -31,6 +32,7 @@
 		},
 
 		data: () => ({
+			//长征事件信息
 			events: [{
 					id: 1,
 					name: "于都",
@@ -139,13 +141,9 @@
 			],
 		}),
 		methods: {
-			addmarkers(){
-				var position = this.events.position;
-				this.map.flyTo(position);
-				var marker = L.marker(position)
-					.addTo(this.map)
-					.bindPopup(`<p>于都——长征第一渡<br>中央、军委机关、红军总部和毛泽东、朱德、周恩来、张闻天、博古就是从于都县城东门的渡口渡过于都河开始长征的。<br /></p>`)
-					.openPopup();
+			//添加marker
+			addmarkers(position){
+				this.$parent.addMarker(position);
 			}
 		},
 	}

@@ -2,7 +2,7 @@ import L from "leaflet"
 import {
 	featureLayer
 } from "esri-leaflet"
-
+//初始化地图
 const newMap = (id) => {
 	var Gaode = L.tileLayer.chinaProvider('GaoDe.Normal.Map', {
 		maxZoom: 18,
@@ -20,7 +20,7 @@ const newMap = (id) => {
 	// 	.addTo(map);
 	return map;
 };
-
+//添加特征图层
 const createLayer = async (map) => {
 	let feature = await featureLayer({
 		url: "https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0"
@@ -32,10 +32,10 @@ const createLayer = async (map) => {
 
 	return feature;
 };
-
-const addmarker = async (map) => {
-	map.flyTo([25.9518, 115.4154]);
-	let marker = await L.marker([25.9518, 115.4154])
+//添加marker
+const addmarker = async (map,position) => {
+	map.flyTo(position);
+	let marker = await L.marker(position)
 		.addTo(map)
 		.bindPopup(`<p>于都——长征第一渡<br>中央、军委机关、红军总部和毛泽东、朱德、周恩来、张闻天、博古就是从于都县城东门的渡口渡过于都河开始长征的。<br /></p>`)
 		.openPopup();

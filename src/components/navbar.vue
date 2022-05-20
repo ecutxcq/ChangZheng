@@ -50,16 +50,20 @@
 	export default {
 		data() {
 			return {
+				//控制菜单的折叠
 				isCollapse: true,
 			};
 		},
 		methods: {
+			//切换路由至主页页面
 			gohome(){
 				this.$router.push('/home');
 			},
+			//添加图层函数
 			addlayer(){
-				eventBus.$emit('add',this.url = "https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0")
+				this.$parent.addLayer();
 			},
+			//打开时间轴
 			timelineopen() {
 				eventBus.$emit('open', this.show = true)
 			},

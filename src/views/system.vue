@@ -26,23 +26,26 @@
 				mapurl: 'https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0',
 			}
 		},
+		//关闭时初始化map
 		destroyed(){
 			this.map = null;
 		},
+		//打开时加载map
 		mounted() {
 			this.getMap();
-			this.addLayer();
-			this.addMarker();
 		},
 		methods: {
+			//初始化地图
 			getMap() {
 				this.map = this.$map.newMap('map'); 
 			},
+			//添加特征图层
 			addLayer(){
 				this.$map.createLayer(this.map);
 			},
-			addMarker(){
-				this.$map.addmarker(this.map);
+			//添加marker
+			addMarker(postion){
+				this.$map.addmarker(this.map,postion);
 			}
 		},
 

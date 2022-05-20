@@ -26,10 +26,12 @@
 </template>
 
 <script>
+	//information组件为下方的长征资料模块，其为单独的一个vue文件
 	import information from '../components/information.vue'
 	export default {
 		data() {
 			return {
+				//走马灯图片
 				imgs: [{
 						id: 1,
 						url: ""
@@ -57,6 +59,7 @@
 		},
 		methods: {
 			gosystem() {
+				//切换路由到系统页面
 				this.$router.push('/system');
 			}
 		}
