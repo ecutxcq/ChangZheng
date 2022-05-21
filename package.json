@@ -15,6 +15,8 @@
     "jquery": "^3.6.0",
     "leaflet": "^1.8.0",
     "leaflet-echarts3": "^0.1.0",
+    "leaflet-minimap": "^3.6.1",
+    "leaflet-sidebar": "^0.2.4",
     "leaflet.bezier": "^0.1.1",
     "leaflet.chinesetmsproviders": "^1.0.22",
     "leaflet.pm": "^2.2.0",

@@ -8,6 +8,7 @@ const newMap = (id) => {
 		maxZoom: 18,
 		minZoom: 5
 	});
+	Gaode.layerType = "basemap";
 	let map = L.map(id, {
 		center: [33, 113],
 		zoom: 5,
@@ -25,15 +26,14 @@ const createLayer = async (map) => {
 	let feature = await featureLayer({
 		url: "https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0"
 	});
-	feature.addTo(map);
 	feature.bindPopup(function(layer) {
 		return L.Util.template('<strong>{location}</strong>', layer.feature.properties);
 	});
-
-	return feature;
+	let layergroup = L.layerGroup([feature]).addTo(map);
+	return layergroup;
 };
 //添加marker
-const addmarker = async (map,position) => {
+const addmarker = async (map, position) => {
 	map.flyTo(position);
 	let marker = await L.marker(position)
 		.addTo(map)
@@ -42,8 +42,17 @@ const addmarker = async (map,position) => {
 	return marker;
 };
 
+const clear = (map) =>{
+	map.eachLayer(function(layer){
+		if(layer.layerType!="basemap"){
+			map.removeLayer(layer);
+		}
+	})
+};
+
 export default {
 	newMap,
 	createLayer,
 	addmarker,
+	clear
 }

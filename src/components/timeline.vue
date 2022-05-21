@@ -8,7 +8,7 @@
 				<el-timeline>
 					<el-timeline-item v-for="obj in events" :key="obj.id" placement="top">
 						<el-card>
-							<h4 @click="addmarkers(obj.position)">{{obj.time}}</h4>
+							<h4 @click="clear(),addmarkers(obj.position),openbar(),show=false" style="cursor: pointer;">{{obj.time}}</h4>
 							<p>{{obj.name}}</p>
 						</el-card>
 					</el-timeline-item>
@@ -144,6 +144,12 @@
 			//添加marker
 			addmarkers(position){
 				this.$parent.addMarker(position);
+			},
+			clear(){
+				this.$parent.removelayer();
+			},
+			openbar(){
+				this.$parent.openbar();
 			}
 		},
 	}
