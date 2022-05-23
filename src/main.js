@@ -7,17 +7,26 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'leaflet-sidebar/src/L.Control.Sidebar.css'
 import VueRouter from 'vue-router'
 import App from './App.vue'
+import store from './store/index'
+import 'video.js/dist/video-js.css'
+
 
 
 import lmap from'../src/assets/js/map'
 import system from '../src/views/system.vue'
 import home from '../src/views/home.vue'
 
+
+
+
+
 //将map.js以map为名字挂载到vue对象
 Vue.prototype.$map = lmap
 //将leaflet.js挂载到vue对象上
 Vue.L = Vue.prototype.$L = L
+
 Vue.config.productionTip = false
+
 //启用vue的路由插件
 Vue.use(VueRouter)
 //启用elementui
@@ -47,6 +56,7 @@ const router = new VueRouter({
 
 new Vue({
 	router,
+	store,
 	render: h => h(App),
 }).$mount('#app')
 //导入leaflet图标文件                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       

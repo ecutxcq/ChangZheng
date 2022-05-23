@@ -14,6 +14,7 @@
     "esri-leaflet": "^3.0.8",
     "jquery": "^3.6.0",
     "leaflet": "^1.8.0",
+    "leaflet-echarts": "^0.2.1",
     "leaflet-echarts3": "^0.1.0",
     "leaflet-minimap": "^3.6.1",
     "leaflet-sidebar": "^0.2.4",
@@ -21,7 +22,9 @@
     "leaflet.chinesetmsproviders": "^1.0.22",
     "leaflet.pm": "^2.2.0",
     "vue": "^2.6.14",
-    "vue-router": "^3.5.1"
+    "vue-mini-player": "^0.2.1",
+    "vue-router": "^3.5.1",
+    "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -31,7 +34,9 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "vue-template-compiler": "^2.6.14"
+    "video.js": "^7.19.2",
+    "vue-template-compiler": "^2.6.14",
+    "vuex": "^3.6.2"
   },
   "eslintConfig": {
     "root": true,

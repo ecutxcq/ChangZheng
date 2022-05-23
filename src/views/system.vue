@@ -3,40 +3,40 @@
 		<div id="map" class="map-main"></div>
 		<navbar></navbar>
 		<div id="leftbar">
-				<el-divider>
-					<h2 class="el-icon-video-camera">于都</h2>
-				</el-divider>
+			<el-divider>
+				<h2 class="el-icon-s-flag">于都</h2>
+			</el-divider>
+			<img style="float: left;height: 150px;width: 180px;margin-top: 30px;" src="../assets/img/于都.png" />
+			<div style="float: right;width: 200px;margin-top: 30px;">
+				{{describe}}
+			</div>
+			
 
 		</div>
-
-		<timeline :show="show"></timeline>
+		<timeline :show="show" @cgpg="getdes()"></timeline>
 	</div>
 </template>
 
 <script>
-	import {
-		featureLayer
-	} from "esri-leaflet"
-	import '../assets/js/render.js'
 	import navbar from '../components/navbar.vue';
 	import timeline from '../components/timeline.vue';
 	import 'leaflet-sidebar';
 	import sidebar from '../components/siderbar.vue';
-
 	export default {
 		name: 'system',
 		components: {
 			navbar,
 			timeline,
-			sidebar
+			sidebar,
 		},
 		data() {
 			return {
 				map: null,
 				layers: null,
-				sidebar:null,
+				sidebar: null,
 				show: true,
 				mapurl: 'https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0',
+				describe:" "
 			}
 		},
 		//关闭时初始化map
@@ -59,7 +59,6 @@
 			//添加特征图层
 			addLayer() {
 				this.layers = this.$map.createLayer(this.map);
-				console.log(this.layers);
 			},
 			//添加marker
 			addMarker(postion) {
@@ -69,8 +68,11 @@
 			removelayer() {
 				this.$map.clear(this.map);
 			},
-			openbar(){
+			openbar() {
 				this.sidebar.show();
+			},
+			getdes(){
+				this.describe=this.$store.getters.getdescribe;
 			}
 		},
 
