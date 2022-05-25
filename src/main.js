@@ -9,9 +9,10 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import store from './store/index'
 import 'video.js/dist/video-js.css'
+import '.././src/assets/js/leafletecharts4'
 
 
-
+import render from '../src/assets/js/render'
 import lmap from'../src/assets/js/map'
 import system from '../src/views/system.vue'
 import home from '../src/views/home.vue'
@@ -19,6 +20,7 @@ import home from '../src/views/home.vue'
 
 
 
+Vue.prototype.$render = render
 
 //将map.js以map为名字挂载到vue对象
 Vue.prototype.$map = lmap

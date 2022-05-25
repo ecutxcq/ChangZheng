@@ -10,7 +10,6 @@
 			<div style="float: right;width: 200px;margin-top: 30px;">
 				{{describe}}
 			</div>
-			
 
 		</div>
 		<timeline :show="show" @cgpg="getdes()"></timeline>
@@ -36,7 +35,7 @@
 				sidebar: null,
 				show: true,
 				mapurl: 'https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0',
-				describe:" "
+				describe: " "
 			}
 		},
 		//关闭时初始化map
@@ -45,11 +44,13 @@
 		},
 		//打开时加载map
 		mounted() {
+			
 			this.getMap();
 			this.sidebar = L.control.sidebar('leftbar', {
 				position: 'right'
 			});
 			this.map.addControl(this.sidebar);
+			this.$render.addrender(this.map);
 		},
 		methods: {
 			//初始化地图
@@ -71,8 +72,8 @@
 			openbar() {
 				this.sidebar.show();
 			},
-			getdes(){
-				this.describe=this.$store.getters.getdescribe;
+			getdes() {
+				this.describe = this.$store.getters.getdescribe;
 			}
 		},
 
