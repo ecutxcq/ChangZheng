@@ -1,5 +1,10 @@
 <template>
 	<div id="home">
+		<el-row style="margin-top: 20px;">
+			<el-col :span="18" :offset="3">
+				<h1 style="text-align: center;font-size: 1.2cm;">GIS视角下的红军长征故事展示系统</h1>
+			</el-col>
+		</el-row>
 		<el-row style="margin-top: 30px;">
 			<el-col :span="5" :offset="3" style="opacity: 0.9;">
 				<el-card :body-style="{ padding: '20px' }">
@@ -17,6 +22,7 @@
 			<el-col :span="12" :offset="1">
 				<el-carousel height="440px">
 					<el-carousel-item v-for="obj in imgs" :key="obj.id">
+						<h3 class="medium" style="margin-top: 0;"><img src="../assets/img/四道防线.png" alt="" style="width: 100%;height: 100%;"></h3>
 					</el-carousel-item>
 				</el-carousel>
 			</el-col>
