@@ -1,4 +1,5 @@
 import echarts from '../js/echarts'
+import axios from 'axios'
 import '../js/leafletecharts4'
 const addrender = (map) => {
 	var geoCoordMap = {
@@ -131,7 +132,7 @@ const addrender = (map) => {
 
 	// var planePath = 'image://src/assets/img/火苗.png';
 	var planePath =
-		'path://M830.386555 223.731092c-146.285714 34.420168-172.10084 154.890756-154.890757 223.731093C572.235294 326.991597 572.235294 197.915966 572.235294 0c-326.991597 120.470588-249.546218 473.277311-258.15126 576.537815-77.445378-68.840336-94.655462-223.731092-94.655463-223.731092C133.378151 395.831933 90.352941 516.302521 90.352941 610.957983c0 232.336134 189.310924 413.042017 421.647059 413.042017s421.647059-189.310924 421.647059-413.042017c0-137.680672-103.260504-206.521008-103.260504-387.226891z';
+		'path://M201.142857 58.514286v658.285714s131.657143-160.914286 336.457143-73.142857c80.457143 43.885714 153.6 109.714286 277.942857 109.714286 124.342857 0 204.8-73.142857 204.8-73.142858V43.885714s-182.857143 182.857143-409.6 29.257143C552.228571 29.257143 449.828571-14.628571 369.371429 7.314286 281.6 29.257143 201.142857 58.514286 201.142857 58.514286M54.857143 1024c-29.257143 0-51.2-21.942857-51.2-58.514286V51.2C3.657143 21.942857 25.6 0 54.857143 0s51.2 21.942857 51.2 51.2v914.285714c7.314286 36.571429-14.628571 58.514286-51.2 58.514286z';
 
 	var convertData = function(data) {
 		var res = [];
@@ -271,6 +272,326 @@ const addrender = (map) => {
 	L.overlayEcharts(option).addTo(map);
 }
 
+const addarea = (map) => {
+	var myChart = echarts.init(map);
+	axios.get("/长征根据地.json").then(function(response) {
+		echarts.registerMap('xch', response);
+
+		var name_title = "红军人数统计"
+		var nameColor = " rgb(0, 0, 155)"
+		var name_fontFamily = '等线'
+
+		var name_fontSize = 25;
+		var mapName = 'xch';
+		var hours = ['1934年10月', '1934年11月', '1935年1月', '1935年1月', '1935年5月', '1935年6月', '1935年8月'];
+		var value = [
+			[{
+					name: '中央革命根据地',
+					value: [116.3195, 26.4823, 86800]
+				}
+
+			],
+			[{
+				name: '湘赣革命根据地',
+				value: [114.14839, 27.30855, 30000]
+			}],
+			[{
+				name: '闽浙赣革命根据地',
+				value: [118.22166, 28.42293, 37000]
+			}],
+			[{
+				name: '湘粤赣革命根据地',
+				value: [114.03485, 29.15220, 24000]
+			}],
+			[{
+				name: '鄂豫皖革命根据地',
+				value: [115.85187, 31.78659, 22000]
+			}],
+			[{
+				name: '湘鄂川黔革命根据地',
+				value: [110.6323, 29.49889, 20000]
+			}],
+			[{
+				name: '陕甘宁革命根据地',
+				value: [108.48524, 37.67804, 13000]
+			}]
+
+		];
+		/*获取地图数据*/
+
+		var max = 100000,
+			min = 10000;
+		var maxSize4Pin = 100,
+			minSize4Pin = 20;
+
+		var convertData = function(value) {
+			var res = [];
+			for (var i = 0; i < value.length; i++) {
+				res.push(value[i]);
+			}
+			return res;
+		};
+	    var option = {
+			timeline: {
+				axisType: 'category',
+				orient: 'vertical',
+				autoPlay: true,
+				inverse: true,
+				playInterval: 1500,
+				loop: true,
+				left: null,
+				right: 10,
+				top: 20,
+				bottom: 20,
+				width: 55,
+				height: null,
+				label: {
+					normal: {
+						textStyle: {
+							color: '#000'
+						}
+					},
+					emphasis: {
+						textStyle: {
+							color: '#ff0000'
+						}
+					}
+				},
+				symbol: 'none',
+				lineStyle: {
+					color: '#555'
+				},
+				checkpointStyle: {
+					color: '#bbb',
+					borderColor: '#777',
+					borderWidth: 2
+				},
+				controlStyle: {
+					showNextBtn: false,
+					showPrevBtn: false,
+					normal: {
+						color: '#666',
+						borderColor: '#666'
+					},
+					emphasis: {
+						color: '#aaa',
+						borderColor: '#aaa'
+					}
+				},
+				data: hours
+			},
+
+			baseOption: {
+				tooltip: {
+					trigger: 'item',
+					formatter: function() {
+
+					}
+				},
+				title: {
+					text: name_title,
+
+					x: 'center',
+					textStyle: {
+						color: nameColor,
+						fontFamily: name_fontFamily,
+						fontSize: name_fontSize
+					},
+					subtextStyle: {
+
+						fontFamily: name_fontFamily
+					}
+				},
+
+				visualMap: {
+					show: true,
+					min: min,
+					max: max,
+					left: 'left',
+					top: 'bottom',
+					text: ['人数'], // 文本，默认为数值文本
+					calculable: true,
+					seriesIndex: [1],
+					inRange: {
+						color: ['#edfbfb', '#b7d6f3', '#40a9ed', '#3598c1', '#215096', ]
+					}
+				},
+				geo: {
+					show: true,
+					map: mapName,
+					label: {
+						normal: {
+							show: false
+						},
+						emphasis: {
+							show: false,
+						}
+					},
+					roam: true,
+					itemStyle: {
+						normal: {
+							areaColor: '#aaaaff',
+							borderColor: '#3B5077',
+						},
+						emphasis: {
+							areaColor: '#2B91B7',
+						}
+					}
+				},
+				series: [{
+						name: '散点',
+						type: 'scatter',
+						coordinateSystem: 'geo',
+						data: value[0],
+						symbolSize: function(val) {
+							return val[2] / 2000;
+						},
+						label: {
+							normal: {
+								formatter: '{b}',
+								position: 'right',
+								show: true
+							},
+							emphasis: {
+								show: true
+							}
+						},
+						itemStyle: {
+							normal: {
+								color: '#ffffff'
+							}
+						}
+					},
+					{
+						name: '长征',
+						type: 'map',
+						map: mapName,
+						geoIndex: 0,
+						aspectScale: 0.75, //长宽比
+						showLegendSymbol: false, // 存在legend时显示
+						label: {
+							normal: {
+								show: true
+							},
+							emphasis: {
+								show: false,
+								textStyle: {
+									color: '#fff'
+								}
+							}
+						},
+						roam: true,
+						itemStyle: {
+							normal: {
+								areaColor: '#031525',
+								borderColor: '#3B5077',
+							},
+							emphasis: {
+								areaColor: '#2B91B7'
+							}
+						},
+						animation: false,
+						data: value[0]
+					},
+					{
+						name: '点',
+						type: 'scatter',
+						coordinateSystem: 'geo',
+						symbol: 'pin', //气泡
+						symbolSize: function(val) {
+							var a = (maxSize4Pin - minSize4Pin) / (max - min);
+							var b = minSize4Pin - a * min;
+							b = maxSize4Pin - a * max;
+							return a * val[2] + b;
+						},
+						label: {
+							normal: {
+								show: true,
+								textStyle: {
+									color: '#0c0c0c',
+									fontSize: 12,
+									fontWeight: 'bold'
+								},
+								formatter: '{@[2]}'
+							}
+						},
+						itemStyle: {
+							normal: {
+								color: '#0055ff', //标志颜色
+							}
+						},
+						zlevel: 6,
+						data: value[0],
+					},
+					{
+						name: 'Top 5',
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: [],
+						symbolSize: function(val) {
+							return val[2] / 1000;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+							brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+							normal: {
+								formatter: '{b}',
+								position: 'right',
+								show: true
+							}
+						},
+						itemStyle: {
+							normal: {
+								color: 'red',
+								shadowBlur: 10,
+								shadowColor: 'red'
+							}
+						},
+						zlevel: 1
+					}
+
+				]
+			},
+			options: []
+		};
+		for (var n = 0; n < hours.length; n++) {
+			option.options.push({
+				title: {
+					subtext: hours[n],
+				},
+
+				series: [{
+						data: value[n]
+					},
+					{
+						data: value[n]
+					},
+					{
+						data: value[n]
+					},
+					{
+						data: convertData(value[n].sort(function(a, b) {
+							return b.value[2] - a.value[2];
+						}).slice(0, 5))
+					}
+
+				]
+
+			});
+		}
+		myChart.setOption(option);
+	})
+}
+
+
+
+
+
+
 export default {
-	addrender
+	addrender,
+	addarea
 }

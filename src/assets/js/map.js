@@ -24,7 +24,7 @@ const newMap = (id) => {
 //添加特征图层
 const createLayer = async (map) => {
 	let feature = await featureLayer({
-		url: "https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0"
+		url: "https://116.63.143.162/server/rest/services/changzheng/red1location/FeatureServer/0"
 	});
 	feature.bindPopup(function(layer) {
 		return L.Util.template('<strong>{location}</strong>', layer.feature.properties);

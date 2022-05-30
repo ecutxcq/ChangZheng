@@ -16,7 +16,7 @@
 					<i class="el-icon-location"></i>
 					<span slot="title">长征路线</span>
 				</template>
-				<el-menu-item index="3-1" @click="timelineopen(),addlayer()">红一方面军</el-menu-item>
+				<el-menu-item index="3-1" @click="timelineopen(),addlayer(),closesidebar()">红一方面军</el-menu-item>
 				<el-menu-item index="3-2">红二、四方面军</el-menu-item>
 				<el-menu-item index="3-3">红六方面军</el-menu-item>
 			</el-submenu>
@@ -65,7 +65,10 @@
 			},
 			//打开时间轴
 			timelineopen() {
-				eventBus.$emit('open', this.show = true)
+				this.$store.commit('setshow',true);
+			},
+			closesidebar(){
+				this.$parent.closebar();
 			},
 			handleOpen(key, keyPath) {
 				console.log(key, keyPath);

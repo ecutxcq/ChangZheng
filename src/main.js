@@ -10,18 +10,21 @@ import App from './App.vue'
 import store from './store/index'
 import 'video.js/dist/video-js.css'
 import '.././src/assets/js/leafletecharts4'
-
+import axios from 'axios'
 
 import render from '../src/assets/js/render'
+
 import lmap from'../src/assets/js/map'
+//引入两个路由页面
 import system from '../src/views/system.vue'
 import home from '../src/views/home.vue'
 
 
 
-
+//将axios挂载到vue对象
+Vue.prototype.$axios = axios;
+//将render.js以map为名字挂载到vue对象
 Vue.prototype.$render = render
-
 //将map.js以map为名字挂载到vue对象
 Vue.prototype.$map = lmap
 //将leaflet.js挂载到vue对象上
@@ -53,6 +56,7 @@ const routes = [
 ]
 //建立路由对象
 const router = new VueRouter({
+	mode:'history',
 	routes
 })
 
