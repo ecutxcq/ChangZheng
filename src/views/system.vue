@@ -77,12 +77,10 @@
 			},
 			//添加位置图层
 			addLayer() {
-				this.$map.clear(this.map);
 				this.layers = this.$map.addlocation(this.map, this.mapurl);
 			},
 			//添加面图层
 			addpoly(){
-				this.$map.clear(this.map);
 				this.layers = this.$map.addpoly(this.map, this.mapurl,this.polycolor);
 				console.log(this.polycolor)
 			},

@@ -2,7 +2,7 @@
 	<div id="home">
 		<el-row style="margin-top: 20px;">
 			<el-col :span="18" :offset="3">
-				<h1 style="text-align: center;font-size: 1.2cm;">GIS视角下的红军长征故事展示系统</h1>
+				<h1 style="text-align: center;font-size: 1.2cm;font-family:cursive">GIS视角下的红军长征故事展示系统</h1>
 			</el-col>
 		</el-row>
 		<el-row style="margin-top: 30px;">
@@ -76,6 +76,7 @@
 	html,
 	body,
 	#home {
+		font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 		background-image: url("../assets/img/background.png");
 		height: 100%;
 		margin: 0px;

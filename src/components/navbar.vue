@@ -24,10 +24,16 @@
 					<i class="el-icon-s-flag"></i>
 					<span slot="title">战役还原</span>
 				</template>
-				<el-menu-item index="5-1">强渡大渡河</el-menu-item>
-				<el-menu-item index="5-2" @click="xscd(),opentime()">雪山草地</el-menu-item>
-				<el-menu-item index="5-3" @click="sdcs(),opentime()">四渡赤水</el-menu-item>
-				<el-menu-item index="5-3" @click="sdfx(),opentime()">突破四道防线</el-menu-item>
+				<el-menu-item index="5-1" @click="sdfx(),opentime()">突破四道防线</el-menu-item>
+				<el-menu-item index="5-2" @click="sdcs(),opentime()">四渡赤水</el-menu-item>
+				<el-menu-item index="5-3">强渡大渡河</el-menu-item>
+				<el-submenu index="5-4">
+					<span slot="title">翻雪山过草地</span>
+					<el-menu-item index="5-4-1" @click="xscd(),opentime()">二维展示</el-menu-item>
+					<el-menu-item index="5-4-2" @click="anys()">三维展示</el-menu-item>
+				</el-submenu>
+
+
 			</el-submenu>
 			<el-menu-item index="6">
 				<i class="el-icon-phone"></i>
@@ -42,8 +48,8 @@
 	export default {
 		data() {
 			return {
-				roadurl:"https://116.63.143.162/server/rest/services/changzheng/hongyilocation/FeatureServer/0",
-				momurl:"https://116.63.143.162/server/rest/services/changzheng/jnglocation/FeatureServer/0",
+				roadurl: "https://116.63.143.162/server/rest/services/changzheng/hongyilocation/FeatureServer/0",
+				momurl: "https://116.63.143.162/server/rest/services/changzheng/jnglocation/FeatureServer/0",
 				//控制菜单的折叠
 				isCollapse: true,
 				events: [{
@@ -54,7 +60,7 @@
 						icon: "el-icon-s-flag",
 						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs1location/FeatureServer/0",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs1road/FeatureServer/0",
-						color:"#ff0000f5",
+						color: "#ff0000f5",
 					},
 					{
 						id: 2,
@@ -64,7 +70,7 @@
 						icon: "el-icon-s-flag",
 						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs2location/FeatureServer/0",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs2road/FeatureServer/0",
-						color:"#ff0000f5"
+						color: "#ff0000f5"
 					},
 					{
 						id: 3,
@@ -74,7 +80,7 @@
 						icon: "el-icon-s-flag",
 						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs3location/FeatureServer/0",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs3road/FeatureServer/0",
-						color:"#ff0000f5"
+						color: "#ff0000f5"
 					},
 					{
 						id: 4,
@@ -84,7 +90,7 @@
 						icon: "el-icon-s-flag",
 						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs4location/FeatureServer/0",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs4road/FeatureServer/0",
-						color:"#ff0000f5"
+						color: "#ff0000f5"
 					},
 				],
 				obs: [{
@@ -95,7 +101,7 @@
 						icon: "el-icon-s-flag",
 						url1: "https://116.63.143.162/server/rest/services/changzheng/sdfxlocation/FeatureServer/0",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdfxroad/FeatureServer/0",
-						color:"#ff0000f5"
+						color: "#ff0000f5"
 					},
 					{
 						id: 2,
@@ -105,7 +111,7 @@
 						icon: "el-icon-s-home",
 						url1: " ",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdfxgjd/FeatureServer/0",
-						color:"#ff0000f5"
+						color: "#ff0000f5"
 					},
 					{
 						id: 3,
@@ -115,7 +121,7 @@
 						icon: "el-icon-aim",
 						url1: " ",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/sdfx/FeatureServer/0",
-						color:"#0055fff5"
+						color: "#0055fff5"
 					},
 				],
 				snow: [{
@@ -125,8 +131,8 @@
 						positon: [31.681093, 102.783945],
 						icon: "el-icon-map-location",
 						url1: "https://116.63.143.162/server/rest/services/changzheng/snowmountain/FeatureServer/0",
-						url2: "https://116.63.143.162/server/rest/services/changzheng/snowroad/FeatureServer/0",	
-						color:"#ff0000f5"
+						url2: "https://116.63.143.162/server/rest/services/changzheng/snowroad/FeatureServer/0",
+						color: "#ff0000f5"
 					},
 					{
 						id: 2,
@@ -136,7 +142,7 @@
 						icon: "el-icon-place",
 						url1: " ",
 						url2: "https://116.63.143.162/server/rest/services/changzheng/caodi/FeatureServer/0",
-						color:"green"
+						color: "green"
 					},
 				],
 			};
@@ -148,11 +154,12 @@
 			},
 			//添加图层函数
 			addlayer(url) {
-				this.$store.commit('setmap',url);
+				this.$parent.removelayer();
+				this.$store.commit('setmap', url);
 				this.$parent.addLayer();
 			},
 			//添加动态路线
-			addroad(){
+			addroad() {
 				this.$parent.addline();
 			},
 			//打开时间轴
@@ -165,25 +172,31 @@
 				this.$parent.closebar();
 			},
 			//打开纪念馆模块
-			opencard(){
+			opencard() {
 				this.$store.commit('settimeshow', false);
 				this.$store.commit('setcardshow', true);
 			},
 			//打开时间轴
-			opentime(){
+			opentime() {
 				this.$store.commit('settimeshow', true);
 			},
 			//时间轴切换为四渡赤水
 			sdcs() {
+				this.$parent.removelayer();
 				this.$store.commit('setitem', this.events);
 			},
 			//时间轴切换为四道防线
 			sdfx() {
+				this.$parent.removelayer();
 				this.$store.commit('setitem', this.obs);
 			},
 			//时间轴切换为雪山草地
-			xscd(){
+			xscd() {
+				this.$parent.removelayer();
 				this.$store.commit('setitem', this.snow);
+			},
+			anys(){
+				window.location.href = "http://127.0.0.1:8848/cesium_app/cesium_app/index.html";
 			},
 			handleOpen(key, keyPath) {
 				console.log(key, keyPath);

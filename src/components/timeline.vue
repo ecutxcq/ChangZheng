@@ -30,7 +30,6 @@
 			},
 			//添加位置和事件图层
 			addlayer(url1, url2, positon,layercolor) {
-				this.$parent.removelayer();
 				this.$parent.changeview(positon);
 				if (url1 != " ") {
 					this.$store.commit('setmap', url1);
