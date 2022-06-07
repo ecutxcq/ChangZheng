@@ -11,31 +11,23 @@
 				<i class="el-icon-s-home"></i>
 				<span slot="title">回到首页</span>
 			</el-menu-item>
-			<el-submenu index="3">
-				<template slot="title">
-					<i class="el-icon-location"></i>
-					<span slot="title">长征路线</span>
-				</template>
-				<el-menu-item index="3-1" @click="timelineopen(),addlayer(),closesidebar()">红一方面军</el-menu-item>
-				<el-menu-item index="3-2">红二、四方面军</el-menu-item>
-				<el-menu-item index="3-3">红六方面军</el-menu-item>
-			</el-submenu>
-			<el-submenu index="4">
-				<template slot="title">
-					<i class="el-icon-star-on"></i>
-					<span slot="title">长征资料</span>
-				</template>
-				<el-menu-item index="4-1">长征纪念馆</el-menu-item>
-				<el-menu-item index="4-2">长征组歌</el-menu-item>
-				<el-menu-item index="4-3">参考书目</el-menu-item>
-			</el-submenu>
+			<el-menu-item index="3" @click="timelineopen(),addlayer(roadurl),closesidebar(),addroad()">
+				<i class="el-icon-location"></i>
+				<span slot="title">重走长征路</span>
+			</el-menu-item>
+			<el-menu-item index="4" @click="opencard(),addlayer(momurl)">
+				<i class="el-icon-star-on"></i>
+				<span slot="title">长征纪念馆</span>
+			</el-menu-item>
 			<el-submenu index="5">
 				<template slot="title">
 					<i class="el-icon-s-flag"></i>
-					<span slot="title">事件展示</span>
+					<span slot="title">战役还原</span>
 				</template>
 				<el-menu-item index="5-1">强渡大渡河</el-menu-item>
-				<el-menu-item index="5-2">雪山草地</el-menu-item>
+				<el-menu-item index="5-2" @click="xscd(),opentime()">雪山草地</el-menu-item>
+				<el-menu-item index="5-3" @click="sdcs(),opentime()">四渡赤水</el-menu-item>
+				<el-menu-item index="5-3" @click="sdfx(),opentime()">突破四道防线</el-menu-item>
 			</el-submenu>
 			<el-menu-item index="6">
 				<i class="el-icon-phone"></i>
@@ -50,25 +42,148 @@
 	export default {
 		data() {
 			return {
+				roadurl:"https://116.63.143.162/server/rest/services/changzheng/hongyilocation/FeatureServer/0",
+				momurl:"https://116.63.143.162/server/rest/services/changzheng/jnglocation/FeatureServer/0",
 				//控制菜单的折叠
 				isCollapse: true,
+				events: [{
+						id: 1,
+						title: "一渡",
+						name: " ",
+						positon: [27.86212, 106.615182],
+						icon: "el-icon-s-flag",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs1location/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs1road/FeatureServer/0",
+						color:"#ff0000f5",
+					},
+					{
+						id: 2,
+						title: "二渡",
+						name: " ",
+						positon: [27.894817, 106.661175],
+						icon: "el-icon-s-flag",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs2location/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs2road/FeatureServer/0",
+						color:"#ff0000f5"
+					},
+					{
+						id: 3,
+						title: "三渡",
+						name: " ",
+						positon: [27.727137, 106.803754],
+						icon: "el-icon-s-flag",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs3location/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs3road/FeatureServer/0",
+						color:"#ff0000f5"
+					},
+					{
+						id: 4,
+						title: "四渡",
+						name: " ",
+						positon: [27.222536, 106.748562],
+						icon: "el-icon-s-flag",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/sdcs4location/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdcs4road/FeatureServer/0",
+						color:"#ff0000f5"
+					},
+				],
+				obs: [{
+						id: 1,
+						title: "路线",
+						name: " ",
+						positon: [25.344337, 112.782876],
+						icon: "el-icon-s-flag",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/sdfxlocation/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdfxroad/FeatureServer/0",
+						color:"#ff0000f5"
+					},
+					{
+						id: 2,
+						title: "根据地",
+						name: " ",
+						positon: [26.690826, 116.204773],
+						icon: "el-icon-s-home",
+						url1: " ",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdfxgjd/FeatureServer/0",
+						color:"#ff0000f5"
+					},
+					{
+						id: 3,
+						title: "四道防线",
+						name: " ",
+						positon: [25.844855, 113.886714],
+						icon: "el-icon-aim",
+						url1: " ",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/sdfx/FeatureServer/0",
+						color:"#0055fff5"
+					},
+				],
+				snow: [{
+						id: 1,
+						title: "雪山",
+						name: " ",
+						positon: [31.681093, 102.783945],
+						icon: "el-icon-map-location",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/snowmountain/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/snowroad/FeatureServer/0",	
+						color:"#ff0000f5"
+					},
+					{
+						id: 2,
+						title: "草地",
+						name: " ",
+						positon: [33.202162, 103.142692],
+						icon: "el-icon-place",
+						url1: " ",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/caodi/FeatureServer/0",
+						color:"green"
+					},
+				],
 			};
 		},
 		methods: {
 			//切换路由至主页页面
-			gohome(){
+			gohome() {
 				this.$router.push('/home');
 			},
 			//添加图层函数
-			addlayer(){
+			addlayer(url) {
+				this.$store.commit('setmap',url);
 				this.$parent.addLayer();
+			},
+			//添加动态路线
+			addroad(){
+				this.$parent.addline();
 			},
 			//打开时间轴
 			timelineopen() {
-				this.$store.commit('setshow',true);
+				this.$store.commit('settimeshow', false);
+				this.$store.commit('setshow', true);
 			},
-			closesidebar(){
+			//关闭菜单
+			closesidebar() {
 				this.$parent.closebar();
+			},
+			//打开纪念馆模块
+			opencard(){
+				this.$store.commit('settimeshow', false);
+				this.$store.commit('setcardshow', true);
+			},
+			//打开时间轴
+			opentime(){
+				this.$store.commit('settimeshow', true);
+			},
+			//时间轴切换为四渡赤水
+			sdcs() {
+				this.$store.commit('setitem', this.events);
+			},
+			//时间轴切换为四道防线
+			sdfx() {
+				this.$store.commit('setitem', this.obs);
+			},
+			//时间轴切换为雪山草地
+			xscd(){
+				this.$store.commit('setitem', this.snow);
 			},
 			handleOpen(key, keyPath) {
 				console.log(key, keyPath);
@@ -76,6 +191,9 @@
 			handleClose(key, keyPath) {
 				console.log(key, keyPath);
 			}
+		},
+		computed: {
+
 		}
 	}
 </script>

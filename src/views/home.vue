@@ -22,7 +22,7 @@
 			<el-col :span="12" :offset="1">
 				<el-carousel height="440px">
 					<el-carousel-item v-for="obj in imgs" :key="obj.id">
-						<h3 class="medium" style="margin-top: 0;"><img src="../assets/img/四道防线.png" alt="" style="width: 100%;height: 100%;"></h3>
+						<h3 class="medium" style="margin-top: 0;"><img :src="obj.url" alt="" style="width: 100%;height: 100%;"></h3>
 					</el-carousel-item>
 				</el-carousel>
 			</el-col>
@@ -40,19 +40,19 @@
 				//走马灯图片
 				imgs: [{
 						id: 1,
-						url: ""
+						url: require("../assets/img/四道防线.png")
 					},
 					{
 						id: 2,
-						url: ""
+						url: require("../assets/img/强渡乌江.png")
 					},
 					{
 						id: 3,
-						url: ""
+						url: require("../assets/img/遵义会议.png")
 					},
 					{
 						id: 4,
-						url: ""
+						url: require("../assets/img/四渡赤水.png")
 					},
 				]
 

@@ -3,7 +3,8 @@
 		<div id="map" class="map-main"></div>
 		<navbar></navbar>
 		<div id="leftbar">
-			<el-button icon="el-icon-close" circle style="position: absolute; right: 5px;" size = "mini" @click="closebar()"></el-button>
+			<el-button icon="el-icon-close" circle style="position: absolute; right: 5px;" size="mini"
+				@click="closebar()"></el-button>
 			<el-divider>
 				<h2 class="el-icon-s-flag">{{name}}</h2>
 			</el-divider>
@@ -13,22 +14,27 @@
 			</div>
 
 		</div>
-		<timeline :show="show" @cgpg="getdes()"></timeline>
+		<rightpanel :show="show" @cgpg="getdes()"></rightpanel>
+		<timeline></timeline>
+		<mem></mem>
 	</div>
 </template>
 
 <script>
 	import navbar from '../components/navbar.vue';
-	import timeline from '../components/timeline.vue';
+	import rightpanel from '../components/rightpanel.vue';
 	import 'leaflet-sidebar';
 	import sidebar from '../components/siderbar.vue';
-	import eventBus from '../EventBus/event.js'
+	import timeline from '../components/timeline.vue';
+	import mem from '../components/card.vue'
 	export default {
 		name: 'system',
 		components: {
 			navbar,
-			timeline,
+			rightpanel,
 			sidebar,
+			timeline,
+			mem
 		},
 		data() {
 			return {
@@ -36,7 +42,6 @@
 				layers: null,
 				sidebar: null,
 				show: false,
-				mapurl: 'https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0',
 				describe: " ",
 				name: " ",
 				imgsrc: " "
@@ -52,29 +57,42 @@
 			this.getMap();
 			this.sidebar = L.control.sidebar('leftbar', {
 				position: 'right',
-				closeButton:false
+				closeButton: false
 			});
 
 			// this.$render.addarea(document.getElementById('map'));
 			this.map.addControl(this.sidebar);
 
 		},
-		
+
 
 		methods: {
 			//初始化地图
 			getMap() {
 				this.map = this.$map.newMap('map');
 			},
-			//添加特征图层
-			addLayer() {
+			//添加echarts路线
+			addline() {
 				this.$render.addrender(this.map);
-				this.layers = this.$map.createLayer(this.map);
+			},
+			//添加位置图层
+			addLayer() {
+				this.$map.clear(this.map);
+				this.layers = this.$map.addlocation(this.map, this.mapurl);
+			},
+			//添加面图层
+			addpoly(){
+				this.$map.clear(this.map);
+				this.layers = this.$map.addpoly(this.map, this.mapurl,this.polycolor);
+				console.log(this.polycolor)
+			},
+			//切换视角
+			changeview(position){
+				this.$map.changeview(this.map,position);
 			},
 			//添加marker
-			addMarker(postion) {
-				this.$map.addmarker(this.map, postion);
-				this.$render.addrender(this.map);
+			addMarker(postion,pop) {
+				this.$map.addmarker(this.map, postion,pop);
 			},
 			//清除图层
 			removelayer() {
@@ -84,8 +102,9 @@
 			openbar() {
 				this.sidebar.show();
 			},
+			//关闭右方的展示栏
 			closebar() {
-				this.$store.commit('setshow',true);
+				this.$store.commit('setshow', true);
 				this.sidebar.hide();
 			},
 			//根据不同的地点显示不同的故事
@@ -100,9 +119,16 @@
 			getimg() {
 				this.imgsrc = this.$store.getters.getimg;
 			},
-
-
 		},
+
+		computed: {
+			mapurl() {
+				return this.$store.state.mapurl;
+			},
+			polycolor(){
+				return this.$store.state.layercolor;
+			}
+		}
 
 	}
 </script>

@@ -15,16 +15,12 @@ const newMap = (id) => {
 		layers: [Gaode],
 		zoomControl: true,
 	});
-	// var feature = featureLayer({
-	// 		url: "https://lyh.augurit.com/server/rest/services/ChangZheng/hongyilocation/FeatureServer/0"
-	// 	})
-	// 	.addTo(map);
 	return map;
 };
-//添加特征图层
-const createLayer = async (map) => {
+//添加位置图层
+const addlocation = async (map,url) => {
 	let feature = await featureLayer({
-		url: "https://116.63.143.162/server/rest/services/changzheng/red1location/FeatureServer/0"
+		url: url
 	});
 	feature.bindPopup(function(layer) {
 		return L.Util.template('<strong>{location}</strong>', layer.feature.properties);
@@ -32,16 +28,36 @@ const createLayer = async (map) => {
 	let layergroup = L.layerGroup([feature]).addTo(map);
 	return layergroup;
 };
+//添加面线图层
+const addpoly = async (map,url,layercolor) =>{
+	let polygon = await featureLayer({
+		url:url,
+		style:{
+			opacity:0.5,
+			color:layercolor
+		}
+	})
+	polygon.bindTooltip(function(layer) {
+		return L.Util.template('<strong>{location}</strong>', layer.feature.properties);
+	}).openTooltip();
+	let layergroup = L.layerGroup([polygon]).addTo(map);
+	return layergroup;
+}
+
 //添加marker
-const addmarker = async (map, position) => {
-	map.flyTo(position);
+const addmarker = async (map, position,pop) => {
+	map.flyTo(position,7);
 	let marker = await L.marker(position)
 		.addTo(map)
-		.bindPopup(`<p>于都——长征第一渡<br>中央、军委机关、红军总部和毛泽东、朱德、周恩来、张闻天、博古就是从于都县城东门的渡口渡过于都河开始长征的。<br /></p>`)
+		.bindPopup(pop)
 		.openPopup();
 	return marker;
 };
-
+//视角跳转
+const changeview = (map,position) =>{
+	map.flyTo(position,8);
+};
+//清除图层
 const clear = (map) =>{
 	map.eachLayer(function(layer){
 		if(layer.layerType!="basemap"){
@@ -52,7 +68,9 @@ const clear = (map) =>{
 
 export default {
 	newMap,
-	createLayer,
+	addlocation,
 	addmarker,
-	clear
+	addpoly,
+	clear,
+	changeview
 }
