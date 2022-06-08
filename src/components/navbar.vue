@@ -26,7 +26,7 @@
 				</template>
 				<el-menu-item index="5-1" @click="sdfx(),opentime()">突破四道防线</el-menu-item>
 				<el-menu-item index="5-2" @click="sdcs(),opentime()">四渡赤水</el-menu-item>
-				<el-menu-item index="5-3">强渡大渡河</el-menu-item>
+				<el-menu-item index="5-3" @click="ddh(),opentime()">强渡大渡河</el-menu-item>
 				<el-submenu index="5-4">
 					<span slot="title">翻雪山过草地</span>
 					<el-menu-item index="5-4-1" @click="xscd(),opentime()">二维展示</el-menu-item>
@@ -145,6 +145,28 @@
 						color: "green"
 					},
 				],
+				ddrv: [{
+						id: 1,
+						title: "大渡河",
+						name: " ",
+						positon: [29.507256, 102.651714],
+						icon: "el-icon-place",
+						url1: " ",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/ddh/FeatureServer/0",
+						color: "#0055fff5"
+					},
+					{
+						id: 2,
+						title: "红军路线",
+						name: " ",
+						positon: [26.64382, 102.375755],
+						icon: "el-icon-ship",
+						url1: "https://116.63.143.162/server/rest/services/changzheng/ddhlocation/FeatureServer/0",
+						url2: "https://116.63.143.162/server/rest/services/changzheng/ddhroad/FeatureServer/0",
+						color: "#ff0000f5"
+					},
+
+				]
 			};
 		},
 		methods: {
@@ -182,20 +204,21 @@
 			},
 			//时间轴切换为四渡赤水
 			sdcs() {
-				this.$parent.removelayer();
 				this.$store.commit('setitem', this.events);
 			},
 			//时间轴切换为四道防线
 			sdfx() {
-				this.$parent.removelayer();
 				this.$store.commit('setitem', this.obs);
 			},
 			//时间轴切换为雪山草地
 			xscd() {
-				this.$parent.removelayer();
 				this.$store.commit('setitem', this.snow);
 			},
-			anys(){
+			//时间轴切换为大渡河
+			ddh() {
+				this.$store.commit('setitem', this.ddrv);
+			},
+			anys() {
 				window.location.href = "http://127.0.0.1:8848/cesium_app/cesium_app/index.html";
 			},
 			handleOpen(key, keyPath) {

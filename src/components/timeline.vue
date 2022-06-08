@@ -47,6 +47,7 @@
 		watch: {
 			//监听item刷新active
 			item(){
+				this.$parent.removelayer();
 				this.active = 0;
 			}
 		},
