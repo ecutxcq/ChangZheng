@@ -5,7 +5,7 @@
 			<div v-show="show" class="transition-box">
 				<el-steps :active="active" style="background-color: white;" simple>
 					<el-step v-for="(obj,index) in item" :title="obj.title" :icon="obj.icon" :key="obj.id"
-						@click.native="next(obj.id),addlayer(obj.url1,obj.url2,obj.positon,obj.color)"
+						@click.native="next(obj.id),addlayer(obj.id,obj.url1,obj.url2,obj.positon,obj.color)"
 						style="cursor: pointer;height: 60px;width: 110px;"></el-step>
 
 				</el-steps>
@@ -29,7 +29,10 @@
 				this.active = value - 1;
 			},
 			//添加位置和事件图层
-			addlayer(url1, url2, positon,layercolor) {
+			addlayer(id,url1, url2, positon,layercolor) {
+				if(id == 1){
+					this.$parent.removelayer();
+				}
 				this.$parent.changeview(positon);
 				if (url1 != " ") {
 					this.$store.commit('setmap', url1);

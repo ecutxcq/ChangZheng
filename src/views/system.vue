@@ -24,7 +24,6 @@
 	import navbar from '../components/navbar.vue';
 	import rightpanel from '../components/rightpanel.vue';
 	import 'leaflet-sidebar';
-	import sidebar from '../components/siderbar.vue';
 	import timeline from '../components/timeline.vue';
 	import mem from '../components/card.vue'
 	export default {
@@ -32,7 +31,6 @@
 		components: {
 			navbar,
 			rightpanel,
-			sidebar,
 			timeline,
 			mem
 		},
