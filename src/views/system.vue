@@ -17,6 +17,7 @@
 		<rightpanel :show="show" @cgpg="getdes()"></rightpanel>
 		<timeline></timeline>
 		<mem></mem>
+		<maplegend></maplegend>
 	</div>
 </template>
 
@@ -25,14 +26,16 @@
 	import rightpanel from '../components/rightpanel.vue';
 	import 'leaflet-sidebar';
 	import timeline from '../components/timeline.vue';
-	import mem from '../components/card.vue'
+	import mem from '../components/card.vue';
+	import maplegend from '../components/legend.vue';
 	export default {
 		name: 'system',
 		components: {
 			navbar,
 			rightpanel,
 			timeline,
-			mem
+			mem,
+			maplegend
 		},
 		data() {
 			return {
@@ -68,6 +71,10 @@
 			//初始化地图
 			getMap() {
 				this.map = this.$map.newMap('map');
+				console.log(this.$store.state.legendshow)
+			},
+			addroad(){
+				this.$render.addroad(this.map);
 			},
 			//添加echarts路线
 			addline() {
@@ -80,7 +87,6 @@
 			//添加面图层
 			addpoly(){
 				this.layers = this.$map.addpoly(this.map, this.mapurl,this.polycolor);
-				console.log(this.polycolor)
 			},
 			//切换视角
 			changeview(position){
@@ -93,6 +99,7 @@
 			//清除图层
 			removelayer() {
 				this.$map.clear(this.map);
+				this.$store.commit('setlegendshow', false);
 			},
 			//打开右方的展示栏
 			openbar() {

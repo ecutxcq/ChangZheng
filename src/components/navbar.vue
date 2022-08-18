@@ -11,10 +11,15 @@
 				<i class="el-icon-s-home"></i>
 				<span slot="title">回到首页</span>
 			</el-menu-item>
-			<el-menu-item index="3" @click="timelineopen(),addlayer(roadurl),closesidebar(),addroad()">
-				<i class="el-icon-location"></i>
-				<span slot="title">重走长征路</span>
-			</el-menu-item>
+			<el-submenu index="3" >
+				<template slot="title">
+					<i class="el-icon-location"></i>
+					<span slot="title">长征路线</span>
+				</template>
+				<el-menu-item index="3-1" @click="timelineopen(),addlayer(roadurl),closesidebar(),addroad()">重走长征路</el-menu-item>
+				<el-menu-item index="3-2" @click="addall()">长征总路线</el-menu-item>
+			</el-submenu>
+
 			<el-menu-item index="4" @click="opencard(),addlayer(momurl)">
 				<i class="el-icon-star-on"></i>
 				<span slot="title">长征纪念馆</span>
@@ -32,8 +37,6 @@
 					<el-menu-item index="5-4-1" @click="xscd(),opentime()">二维展示</el-menu-item>
 					<el-menu-item index="5-4-2" @click="anys()">三维展示</el-menu-item>
 				</el-submenu>
-
-
 			</el-submenu>
 			<el-menu-item index="6">
 				<i class="el-icon-phone"></i>
@@ -179,6 +182,41 @@
 				this.$parent.removelayer();
 				this.$store.commit('setmap', url);
 				this.$parent.addLayer();
+			},
+			//添加总路线
+			addall() {
+				this.$parent.removelayer();
+				this.$parent.addroad();
+				this.$store.commit('setmap',
+					'https://116.63.143.162/server/rest/services/changzheng/%E6%80%BB%E8%B7%AF%E7%BA%BF/FeatureServer/0'
+				);
+				this.$parent.addLayer();
+				this.$store.commit('setcolor', '#ff0000f5');
+				this.$store.commit('setmap',
+					'https://116.63.143.162/server/rest/services/changzheng/%E6%80%BB%E8%B7%AF%E7%BA%BF/FeatureServer/1'
+				);
+				this.$parent.addpoly();
+				this.$store.commit('setcolor', '#0055fff5');
+				this.$store.commit('setmap',
+					'https://116.63.143.162/server/rest/services/changzheng/%E6%80%BB%E8%B7%AF%E7%BA%BF/FeatureServer/2'
+				);
+				this.$parent.addpoly();
+				this.$store.commit('setcolor', '#000000f5');
+				this.$store.commit('setmap',
+					'https://116.63.143.162/server/rest/services/changzheng/%E6%80%BB%E8%B7%AF%E7%BA%BF/FeatureServer/4'
+				);
+				this.$parent.addpoly();
+				this.$store.commit('setcolor', '#55ff00f5');
+				this.$store.commit('setmap',
+					'https://116.63.143.162/server/rest/services/changzheng/%E6%80%BB%E8%B7%AF%E7%BA%BF/FeatureServer/5'
+				);
+				this.$parent.addpoly();
+				this.$store.commit('setcolor', '#d08b00f5');
+				this.$store.commit('setmap',
+					'https://116.63.143.162/server/rest/services/changzheng/%E6%80%BB%E8%B7%AF%E7%BA%BF/FeatureServer/3'
+				);
+				this.$parent.addpoly();
+				this.$store.commit('setlegendshow', true);
 			},
 			//添加动态路线
 			addroad() {

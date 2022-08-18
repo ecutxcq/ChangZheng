@@ -272,6 +272,232 @@ const addrender = (map) => {
 	L.overlayEcharts(option).addTo(map);
 }
 
+const addroad = (map) => {
+	var geoCoordMap = {
+		'于都': [115.4154, 25.9518],
+		'兴安': [110.6714, 25.6117],
+		'通道': [109.7844, 26.1579],
+		'黎平': [109.1371, 26.2292],
+		'翁安': [107.4758, 27.0859],
+		'遵义': [106.8292, 27.5362],
+		'习水': [106.2038, 28.3274],
+		'禄劝': [102.4714, 25.5513],
+		'石棉': [102.3594, 29.2279],
+		'泸定': [102.2347, 29.9141],
+		'夹金山': [102.7365, 30.8103],
+		'毛儿盖': [103.0614, 32.6028],
+		'包座': [103.3766, 33.4729],
+		'腊子口': [103.9061, 34.0693],
+		'吴起': [108.1758, 36.9272],
+		'直罗': [109.0042, 35.9644],
+		'会宁': [105.0533, 35.6929],
+		'将台堡': [105.8499, 35.8234]
+	};
+	var czData = [
+		[{
+			name: '于都'
+		}, {
+			name: '于都',
+			value: 90
+		}],
+		[{
+			name: '于都'
+		}, {
+			name: '兴安',
+			value: 90
+		}],
+		[{
+			name: '兴安'
+		}, {
+			name: '通道',
+			value: 90
+		}],
+		[{
+			name: '通道'
+		}, {
+			name: '翁安',
+			value: 90
+		}],
+		[{
+			name: '翁安'
+		}, {
+			name: '遵义',
+			value: 90
+		}],
+		[{
+			name: '遵义'
+		}, {
+			name: '习水',
+			value: 90
+		}],
+		[{
+			name: '习水'
+		}, {
+			name: '禄劝',
+			value: 90
+		}],
+		[{
+			name: '禄劝'
+		}, {
+			name: '石棉',
+			value: 90
+		}],
+		[{
+			name: '石棉'
+		}, {
+			name: '泸定',
+			value: 90
+		}],
+		[{
+			name: '泸定'
+		}, {
+			name: '夹金山',
+			value: 90
+		}],
+		[{
+			name: '夹金山'
+		}, {
+			name: '毛儿盖',
+			value: 90
+		}],
+		[{
+			name: '毛儿盖'
+		}, {
+			name: '包座',
+			value: 90
+		}],
+		[{
+			name: '包座'
+		}, {
+			name: '腊子口',
+			value: 90
+		}],
+		[{
+			name: '腊子口'
+		}, {
+			name: '吴起',
+			value: 90
+		}],
+		[{
+			name: '吴起'
+		}, {
+			name: '直罗',
+			value: 90
+		}],
+		[{
+			name: '直罗'
+		}, {
+			name: '会宁',
+			value: 90
+		}],
+		[{
+			name: '会宁'
+		}, {
+			name: '将台堡',
+			value: 90
+		}],
+
+	];
+
+	var convertData = function(data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+			var dataItem = data[i];
+			var fromCoord = geoCoordMap[dataItem[0].name];
+			var toCoord = geoCoordMap[dataItem[1].name];
+			if (fromCoord && toCoord) {
+				res.push({
+					fromName: dataItem[0].name,
+					toName: dataItem[1].name,
+					coords: [fromCoord, toCoord]
+				});
+			}
+		}
+		return res;
+	};
+
+	var color = ['red'];
+	var series = [];
+	[
+		['长征', czData]
+	].forEach(function(item, i) {
+		series.push( {
+			name: item[0],
+			type: 'effectScatter',
+			coordinateSystem: 'geo',
+			zlevel: 2,
+			rippleEffect: {
+				brushType: 'stroke'
+			},
+			label: {
+				normal: {
+					show: true,
+					position: 'right',
+					formatter: '{b}'
+				}
+			},
+			symbolSize: function(val) {
+				return val[2] / 15;
+			},
+			itemStyle: {
+				normal: {
+					color: color[i]
+				}
+			},
+			data: item[1].map(function(dataItem) {
+				return {
+					name: dataItem[1].name,
+					value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+				};
+			})
+		});
+	});
+
+	var option = {
+		//backgroundColor: '#404a59',
+		title: {
+			text: '',
+			left: 'center',
+			textStyle: {
+				color: '#fff'
+			}
+		},
+		tooltip: {
+			trigger: 'item'
+		},
+		legend: {
+			orient: 'vertical',
+			bottom: 30,
+			left: 'right',
+			data: ['长征总路线'],
+			textStyle: {
+				color: '#fff'
+			},
+			selectedMode: 'single'
+		},
+		geo: {
+			map: '',
+			label: {
+				emphasis: {
+					show: false
+				}
+			},
+			roam: true,
+			itemStyle: {
+				normal: {
+					areaColor: '#323c48',
+					borderColor: '#404a59'
+				},
+				emphasis: {
+					areaColor: '#2a333d'
+				}
+			}
+		},
+		series: series
+	};
+	L.overlayEcharts(option).addTo(map);
+}
+
 const addarea = (map) => {
 	var myChart = echarts.init(map);
 	axios.get("/长征根据地.json").then(function(response) {
@@ -593,5 +819,6 @@ const addarea = (map) => {
 
 export default {
 	addrender,
-	addarea
+	addarea,
+	addroad
 }

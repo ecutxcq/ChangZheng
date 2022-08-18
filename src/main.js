@@ -68,7 +68,7 @@ new Vue({
 //导入leaflet图标文件                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-	iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+	iconRetinaUrl: require("../src/assets/img/火炬.png"),
 	iconUrl: require("leaflet/dist/images/marker-icon.png"),
 	shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });

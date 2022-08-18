@@ -3,8 +3,11 @@
 		<transition name="el-zoom-in-center" style="background-color: black;">
 			<div v-show="show" class="transition-box">
 				<el-carousel style="width: 370px;" indicator-position="none" :autoplay=false >	
-					<el-carousel-item v-for="obj in mem" :key="obj.id" id="item">		
-						<h3 class="medium" id="title" style="cursor: pointer;" @click="addmarkers(obj.position,obj.pop)">{{obj.name}}</h3><div style="width: 280px;position: absolute;left: 45px;margin-top: 0;"><p id="describe">{{obj.describe}}</p></div><el-link style="position: absolute;left: 25px;bottom: 25px;" @click="newwindow(obj.url)">详情</el-link><el-button icon="el-icon-close" style="position: absolute;right: 15px;bottom: 15px;" @click="close()"></el-button>
+					<el-carousel-item v-for="obj in mem" :key="obj.id" id="item">
+						<el-tooltip content="点击查看场馆所在地" placement="right-start" effect="light">
+						  <h3 class="medium" id="title" style="cursor: pointer;" @click="addmarkers(obj.position,obj.pop)">{{obj.name}}</h3>
+						</el-tooltip>
+						<div style="width: 280px;position: absolute;left: 45px;margin-top: 0;"><p id="describe">{{obj.describe}}</p></div><el-link style="position: absolute;left: 25px;bottom: 25px;" @click="newwindow(obj.url)">详情</el-link><el-button icon="el-icon-close" style="position: absolute;right: 15px;bottom: 15px;" @click="close()"></el-button>
 					</el-carousel-item>
 				</el-carousel>
 			</div>

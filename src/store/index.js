@@ -9,10 +9,11 @@ const state = {
 	name:'none',
 	imgsrc:"../assets/img/于都.png",
 	show:false,
-	mapurl:'https://116.63.143.162/server/rest/services/changzheng/hongyilocation/FeatureServer/0',
+	mapurl:'https://server.tctc.com/server/rest/services/changzheng/hongyilocation/FeatureServer/0',
 	timeitem:[],
 	timeshow:false,
 	cardshow:false,
+	legendshow:false
 }
 
 const getters = {
@@ -42,6 +43,9 @@ const getters = {
 	},
 	getcarshow(){
 		return state.cardshow;
+	},
+	getlegendshow(){
+		return state.legendshow;
 	}
 }
 const mutations = {
@@ -71,6 +75,9 @@ const mutations = {
 	},
 	setcardshow(state,value){
 		state.cardshow = value
+	},
+	setlegendshow(state,value){
+		state.legendshow = value;
 	}
 }
 

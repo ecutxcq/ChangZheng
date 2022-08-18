@@ -23,7 +23,7 @@ const addlocation = async (map,url) => {
 		url: url
 	});
 	feature.bindPopup(function(layer) {
-		return L.Util.template('<strong>{location}</strong>', layer.feature.properties);
+		return L.Util.template('<strong>{location}<p>{time}  {event}<p/></strong>', layer.feature.properties);
 	});
 	let layergroup = L.layerGroup([feature]).addTo(map);
 	return layergroup;
@@ -33,8 +33,9 @@ const addpoly = async (map,url,layercolor) =>{
 	let polygon = await featureLayer({
 		url:url,
 		style:{
-			opacity:0.5,
-			color:layercolor
+			opacity:1,
+			weight:0.5,
+			color:layercolor,			
 		}
 	})
 	polygon.bindTooltip(function(layer) {
